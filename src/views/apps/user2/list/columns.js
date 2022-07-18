@@ -21,49 +21,45 @@ const renderClient = row => {
   if (row.avatar && row.avatar.length) {
     return <Avatar className='mr-1' img={row.avatar} width='32' height='32' />
   } else {
-    return <Avatar color={color || 'primary'} className='mr-1' content={row.fullName || 'John Doe'} initials />
+    return <Avatar color={color || 'primary'} className='mr-1' content={row.name || 'John Doe'} initials />
   }
 }
 
 // ** Renders Role Columns
 const renderRole = row => {
   const roleObj = {
-    subscriber: {
+    client: {
       class: 'text-primary',
       icon: User
     },
-    maintainer: {
+    teammember: {
       class: 'text-success',
       icon: Database
     },
-    editor: {
-      class: 'text-info',
-      icon: Edit2
-    },
-    author: {
+    projectowner: {
       class: 'text-warning',
       icon: Settings
     },
-    admin: {
+    teamleader: {
       class: 'text-danger',
       icon: Slack
     }
   }
 
-  const Icon = roleObj[row.role] ? roleObj[row.role].icon : Edit2
+  const Icon = roleObj[row.user_type] ? roleObj[row.user_type].icon : Edit2
 
   return (
     <span className='text-truncate text-capitalize align-middle'>
-      <Icon size={18} className={`${roleObj[row.role] ? roleObj[row.role].class : ''} mr-50`} />
-      {row.role}
+      <Icon size={18} className={`${roleObj[row.user_type] ? roleObj[row.user_type].class : ''} mr-50`} />
+      {row.user_type}
     </span>
   )
 }
 
 const statusObj = {
-  pending: 'light-warning',
-  active: 'light-success',
-  inactive: 'light-secondary'
+  Pending: 'light-warning',
+  Active: 'light-success',
+  Inactive: 'light-secondary'
 }
 
 export const columns = [
@@ -81,9 +77,9 @@ export const columns = [
             className='user-name text-truncate mb-0'
             onClick={() => store.dispatch(getUser(row.id))}
           >
-            <span className='font-weight-bold'>{row.fullName}</span>
+            <span className='font-weight-bold'>{row.name}</span>
           </Link>
-          <small className='text-truncate text-muted mb-0'>@{row.username}</small>
+          <small className='text-truncate text-muted mb-0'>@{row.email}</small>
         </div>
       </div>
     )
@@ -101,13 +97,6 @@ export const columns = [
     selector: 'role',
     sortable: true,
     cell: row => renderRole(row)
-  },
-  {
-    name: 'Plan',
-    minWidth: '138px',
-    selector: 'currentPlan',
-    sortable: true,
-    cell: row => <span className='text-capitalize'>{row.currentPlan}</span>
   },
   {
     name: 'Status',

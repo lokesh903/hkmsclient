@@ -32,26 +32,29 @@ import {
   Save,
   ArrowDownCircle,
   Info,
-  PieChart
+  PieChart,
+  AlertCircle,
+  Upload,
+  Check
 } from 'react-feather'
 
 // ** Vars
+const invoiceStatusObj = {
+  Pending: { color: 'light-secondary', icon: AlertCircle },
+  Done: { color: 'light-success', icon: Check },
+  Review: { color: 'light-primary', icon: Eye },
+  Submited: { color: 'light-info', icon: Upload },
+  Due: { color: 'light-danger', icon: Info },
+  NotInitiated: { color: 'light-warning', icon: PieChart }
+}
 // const invoiceStatusObj = {
-//   Sent: { color: 'light-secondary', icon: Send },
-//   Paid: { color: 'light-success', icon: CheckCircle },
-//   Draft: { color: 'light-primary', icon: Save },
-//   Downloaded: { color: 'light-info', icon: ArrowDownCircle },
+//   0: { color: 'light-secondary', icon: Send },
+//   1: { color: 'light-success', icon: CheckCircle },
+//   2: { color: 'light-primary', icon: Save },
+//   3: { color: 'light-info', icon: ArrowDownCircle },
 //   'Past Due': { color: 'light-danger', icon: Info },
 //   'Partial Payment': { color: 'light-warning', icon: PieChart }
 // }
-const invoiceStatusObj = {
-  0: { color: 'light-secondary', icon: Send },
-  1: { color: 'light-success', icon: CheckCircle },
-  2: { color: 'light-primary', icon: Save },
-  3: { color: 'light-info', icon: ArrowDownCircle },
-  'Past Due': { color: 'light-danger', icon: Info },
-  'Partial Payment': { color: 'light-warning', icon: PieChart }
-}
 
 // ** renders client column
 const renderClient = row => {
@@ -86,17 +89,17 @@ export const columns = [
           <UncontrolledTooltip placement='top' target={`av-tooltip-${row.id}`}>
             <span className='font-weight-bold'>{row.status}</span>
             <br />
-            <span className='font-weight-bold'>Balance:</span> {row.budget}
+            <span className='font-weight-bold'>budget:</span> {row.budget}
             <br />
-            <span className='font-weight-bold'>Due Date:</span> {row.endDate}
+            <span className='font-weight-bold'>due Date:</span> {row.end_date}
           </UncontrolledTooltip>
         </Fragment>
       )
     }
   },
   {
-    name: 'Client',
-    minWidth: '350px',
+    name: 'Client ID',
+    minWidth: '250px',
     selector: 'client',
     sortable: true,
     cell: row => {
@@ -115,18 +118,18 @@ export const columns = [
   },
   
   {
-    name: 'Total',
+    name: 'Title',
     selector: 'total',
     sortable: true,
-    minWidth: '150px',
-    cell: row => <span>${row.budget || 0}</span>
+    minWidth: '250px',
+    cell: row => <span>{row.project_title || 0}</span>
   },
   {
     name: 'Issued Date',
     selector: 'dueDate',
     sortable: true,
     minWidth: '200px',
-    cell: row => row.end_Date
+    cell: row => { return row.start_date ? row.start_date.slice(0, 10) : "2022/02/01" }
   },
   {
     name: 'Balance',

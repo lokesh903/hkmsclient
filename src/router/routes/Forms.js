@@ -1,5 +1,4 @@
 import { lazy } from 'react'
-
 const FormRoutes = [
   {
     path: '/forms/elements/input',

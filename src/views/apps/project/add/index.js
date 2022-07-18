@@ -54,12 +54,11 @@ import {useHistory} from "react-router-dom"
         try {
           const p = parseFloat(phase.value, 10)
           const c = parseFloat(client_id.value, 10)
-          const s = parseFloat(status.value, 10)
+         
           const b = parseFloat(budget.value, 10)
-          console.log(p, c, s, b)
+          console.log(p, c, b)
           phase.value = p
           client_id.value = c
-          status.value = s
           budget.value = b
           
         } catch {
@@ -68,8 +67,8 @@ import {useHistory} from "react-router-dom"
         if (phase.value >= 255) {
           return toast.warning("Project Phase should be less then 255")
 
-        } else if (status.value >= 255) {
-        return toast.warning("Project status should be less then 255")
+        // } else if (status.value >= 255) {
+        // return toast.warning("Project status should be less then 255")
 
       } else if (project_title.value.length >= 6500) {
         return toast.warning("Project title length  should be less then 65000 charecters")
@@ -191,7 +190,7 @@ import {useHistory} from "react-router-dom"
                       <Flag size={15} />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input type='number' name='status' id='status' placeholder='Status' ref={flagRef} required={true}  />
+                  <Input type='text' name='status' id='status' placeholder='Status' ref={flagRef} required={true}  />
                 </InputGroup>
               </Col>
             </FormGroup>

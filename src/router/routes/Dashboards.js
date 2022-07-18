@@ -15,6 +15,11 @@ const DashboardRoutes = [
     path: '/dashboard/project',
     component: lazy(() => import('../../views/dashboard/project')),
     exact: true
+  },
+  {
+    path: '/dashboard/kanbanboards',
+    component: lazy(() => import('../../views/extensions/drag-and-drop/kanban')),
+    exact: true
   }
 ]
 

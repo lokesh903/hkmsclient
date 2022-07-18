@@ -14,6 +14,7 @@ import calendar from '@src/views/apps/calendar/store/reducer'
 import ecommerce from '@src/views/apps/ecommerce/store/reducer'
 import dataTables from '@src/views/tables/data-tables/store/reducer'
 import project from '@src/views/apps/project/store/reducer'
+import board from '../../views/extensions/drag-and-drop/store/reducer'
 
 const rootReducer = combineReducers({
   auth,
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
   calendar,
   ecommerce,
   dataTables,
-  project
+  project,
+  board
 })
 
 export default rootReducer

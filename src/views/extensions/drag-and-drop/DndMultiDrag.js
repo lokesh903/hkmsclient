@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import img1 from '@src/assets/images/portrait/small/avatar-s-12.jpg'
 import img2 from '@src/assets/images/portrait/small/avatar-s-1.jpg'
 import img3 from '@src/assets/images/portrait/small/avatar-s-2.jpg'
@@ -97,7 +97,7 @@ const DndMultiDrag = () => {
           Use <code>CTRL</code> key to select multiple items.
         </CardText>
         <Row>
-          <Col md='6' sm='12'>
+          <Col md='4' sm='4' lg="4">
             <h4 className='my-1'>People Group 1</h4>
             <ReactSortable
               tag='ul'
@@ -115,14 +115,14 @@ const DndMultiDrag = () => {
                         <Media
                           object
                           src={item.img}
-                          className='rounded-circle mr-2'
+                          className='rounded-circle mr-2 mt-2'
                           alt='Generic placeholder image'
                           height='50'
                           width='50'
                         />
                       </Media>
                       <Media body>
-                        <h5 className='mt-0'>{item.name}</h5>
+                        <h5 className='mt-2'>{item.name}</h5>
                         {item.content}
                       </Media>
                     </Media>
