@@ -57,6 +57,12 @@ export default [
         title: 'Kanban Boards',
         icon: <Circle size={12} />,
         navLink: '/dashboard/kanbanboards'
+      },
+      {
+        id: 'task',
+        title: 'Task',
+        icon: <Circle size={12} />,
+        navLink: '/dashboard/tasks'
       }
     ]
   }

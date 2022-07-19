@@ -20,6 +20,13 @@ const DashboardRoutes = [
     path: '/dashboard/kanbanboards',
     component: lazy(() => import('../../views/extensions/drag-and-drop/kanban')),
     exact: true
+  },
+  {
+    path: '/dashboard/tasks',
+    exact: true,
+    appLayout: true,
+    className: 'todo-application',
+    component: lazy(() => import('../../views/apps/task'))
   }
 ]
 

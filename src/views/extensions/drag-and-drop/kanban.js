@@ -62,89 +62,32 @@ const array = {
 const DndMultiDrag = () => {
   const dispatch = useDispatch()
   const store = useSelector(state => state.board)
-  const [listArr1, setListArr1] = useState([])
-  const [listArr2, setListArr2] = useState([])
+  const [listArr, setListArr] = useState([{ array:array.list1, id:1, board_title:"" }])
+  // const [listArr2, setListArr2] = useState([])
   const [f1, setF1] = useState(false)
   const [new1, setNew1] = useState(array.list1)
   const [data, setData] = useState({})
   
-//   const onUpdate1 = async () => {
-//     const details = {
-//     id :   1,
-//     array:listArr1
-//     }
-//   const response = await fetch("http://localhost:9000/boards/updateboards", {
-//   method: "POST",
-//   headers: {
-//     "Content-Type": "application/json;charset=utf-8"
-//   },
-//   body: JSON.stringify(details)
-// })
-//   }
-//   const onUpdate2 = async () => {
-    // const details = {
-    // id :   2,
-    // array:listArr2
-    // }
-//   const response = await fetch("http://localhost:9000/boards/updateboards", {
-//   method: "POST",
-//   headers: {
-//     "Content-Type": "application/json;charset=utf-8"
-//   },
-//   body: JSON.stringify(details)
-// })
-//   }
-
-//   useEffect(() => {
-//     setListArr1(store.data.length ? store.data[0].array : [])
-//     setListArr2(store.data.length ? store.data[1].array : [])
-//     console.log("Store data")
-//     console.log(store.data)
-//   }, [listArr1])
-//   useEffect(() => {
-//       dispatch(
-//         getData({
-//           pid:1
-//         })
-//       )
-//   }, [])
-
-//   useEffect(() => {
-//     if (listArr1.length && listArr1[0].name !== "demo") {
-//       onUpdate1()
-//     }
-    
-//   }, [listArr1])
-//   useEffect(() => {
-//     if (listArr2.length && listArr2[0].name !== "demo") {
-//       onUpdate2()
-//     }
-//   }, [listArr2])
 
 console.log("render")
-// const fetch = async (details) => {
-//   const response = await fetch("http://localhost:9000/boards/updateboards", {
-//   method: "POST",
-//   headers: {
-//     "Content-Type": "application/json;charset=utf-8"
-//   },
-//   body: JSON.stringify(details)
-// })
-// }
+
 
 useEffect(async () => {
   const params = {pid:1}
+  console.log("is useeffect")
   axios.get('http://localhost:9000/boards/getboards', {params}).then(response => {
     
-    setData(response.data)
-    setListArr1(response.data[0].array) 
-    setListArr2(response.data[1].array)
-    console.log("arr1 ,2 has set according to db", response.data)
-    setF1(true)
-    console.log("now f1 is true")
-  }).catch(err => { console.log(err) })
+    setListArr(response.data) 
+    console.log("listArr has set according to db", listArr)
+  }).catch(err => { console.log("err is ", err) })
+  setF1(true)
 }, [])
-
+  useEffect(() => {
+    console.log("listArr value ", listArr)
+    if (f1) {
+      console.log("listArr changed")
+    }
+  }, [listArr])
 // save arr2 in sql
 
 // useEffect(async () => {
@@ -182,58 +125,63 @@ useEffect(async () => {
 //   }
 // }, [listArr1])
 
-const handlchange = async(id) => {
-    // setTimeout(() => {}, 1000)
-    const array = listArr1
+// const handlchange = async(id) => {
+//     // setTimeout(() => {}, 1000)
+//     const array = listArr1
+//     const details = {
+//       id:1,
+//       array
+//       }
+//     console.log("arr1 sent", listArr1)
+//     const response = await fetch("http://localhost:9000/boards/updateboards", {
+//   method: "POST",
+//   headers: {
+//     "Content-Type": "application/json;charset=utf-8"
+//   },
+//   body: JSON.stringify(details)
+//   })
+// }
+
+// useEffect(() => {
+//   console.log("state of 1 changed", listArr1)
+// }, [listArr1])
+
+const ond = async(instance) => {
+  console.log("on sort board having pk ", instance.id)
+  const array = instance.array
     const details = {
-      id:1,
+      id:instance.id,
       array
       }
-    console.log("arr1 sent", listArr1)
     const response = await fetch("http://localhost:9000/boards/updateboards", {
   method: "POST",
   headers: {
     "Content-Type": "application/json;charset=utf-8"
   },
   body: JSON.stringify(details)
-  })
-}
-
-// useEffect(() => {
-//   console.log("state of 1 changed", listArr1)
-// }, [listArr1])
-
-const ond = async(id) => {
-  console.log("on drop ", id)
-  const array = listArr1
-    const details1 = {
-      id:1,
-      array
-      }
-    const response = await fetch("http://localhost:9000/boards/updateboards", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json;charset=utf-8"
-  },
-  body: JSON.stringify(details1)
-  }).then(console.log("arr1 sent", listArr1))
+  }).then(console.log(`board having pk ${id} is sent, data is `, instance.array))
 
 }
-const ond2 = async (id) => {
+// const ond2 = async (id) => {
   
-  console.log("on drop ", id)
-  const array = listArr2 
-    const details2 = {
-      id:2,
-      array
-      }
-    const response2 = await fetch("http://localhost:9000/boards/updateboards", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json;charset=utf-8"
-  },
-  body: JSON.stringify(details2)
-  }).then(console.log("arr2 sent", listArr2))
+//   console.log("on drop ", id)
+//   const array = listArr2 
+//     const details2 = {
+//       id:2,
+//       array
+//       }
+//     const response2 = await fetch("http://localhost:9000/boards/updateboards", {
+//   method: "POST",
+//   headers: {
+//     "Content-Type": "application/json;charset=utf-8"
+//   },
+//   body: JSON.stringify(details2)
+//   }).then(console.log("arr2 sent", listArr2))
+// }
+const setArr = (id, newArr) => {
+  const temp = [...listArr]
+  temp[id].array = [] + newArr
+  setListArr(temp)
 }
   return (
     <Card >
@@ -248,32 +196,27 @@ const ond2 = async (id) => {
           Use <code>CTRL</code> key to select multiple items.
         </CardText>
         <Row >
-          <Col md='4' sm='4' lg="4" >
-            <h4 className='my-1'>People Group 1</h4>
+         
+          { listArr.map((instance, index) => {
+            return (
+            <Col md='4' sm='4' lg="4" >
+              
+            <h4 className='my-1'>{instance.board_title}</h4>
             <ReactSortable
               tag='ul'
-              onSort={() => { ond(1) }}
+              onSort={() => { console.log("sort") }}
               className='list-group list-group-flush sortable mx-2'
               group='shared-multi-drag-group'
-              list={listArr1}
-              setList={setListArr1}  
+              list={ instance.array }
+              setList={setArr}  
             >
-              {listArr1.map(item => {
-                
+              <h2>hii</h2> 
+              {/* {listArr[0].array.map(item => {
                 return (
                   <ListGroupItem className='draggable' key={item.id}  >
                       <div >
                     <Media>
-                      {/* <Media left tag='div'>
-                        <Media
-                          object
-                          src={item.img}
-                          className='rounded-circle mr-2 mt-2'
-                          alt='Generic placeholder image'
-                          height='50'
-                          width='50'
-                        />
-                      </Media> */}
+                      
                       <Media body>
 
                         <h5 className='mt-2'>{item.name} </h5>
@@ -284,47 +227,52 @@ const ond2 = async (id) => {
                         </div>
                   </ListGroupItem>
                 )
-              })}
+              })} */}
             </ReactSortable>
           </Col>
-          <Col md='6' sm='12'>
-            <h4 className='my-1' >People Group 2</h4>
-            <ReactSortable
-              tag='ul'
-              onSort={() => { ond2(2) }}
-              className='list-group list-group-flush sortable mx-2'
-              group='shared-multi-drag-group'
-              list={listArr2}
-              setList={setListArr2}
-            >
-              {listArr2.map(item => {
-                return (
-                  <ListGroupItem className='draggable' key={item.id}  >
-                    <div  >
-                    <Media>
-                      {/* <Media left tag='div'>
-                        <Media
-                          object
-                          src={item.img}
-                          className='rounded-circle mr-2'
-                          alt='Generic placeholder image'
-                          height='50'
-                          width='50'
-                        />
-                      </Media> */}
-                      <Media body>
-
-                        <h5 className='mt-0' >{item.name}</h5>
-                         {item.content} 
-                        
-                      </Media>
-                    </Media>
-                       </div>
-                  </ListGroupItem>
-                )
-              })}
-            </ReactSortable>
-          </Col>
+            )
+            
+          
+           })} 
+          {/* <Col md='4' sm='4' lg="4" >
+              
+              <h4 className='my-1'>People Group 1</h4>
+              <ReactSortable
+                tag='ul'
+                onSort={() => { ond(listArr[0]) }}
+                className='list-group list-group-flush sortable mx-2'
+                group='shared-multi-drag-group'
+                list={ listArr[0].array }
+                setList={(newArr) => { setArr(0, newArr) }}  
+              >
+                {listArr[0].array.map(item => {
+                  return (
+                    <ListGroupItem className='draggable' key={item.id}  >
+                        <div >
+                      <Media>
+                        {/* <Media left tag='div'>
+                          <Media
+                            object
+                            src={item.img}
+                            className='rounded-circle mr-2 mt-2'
+                            alt='Generic placeholder image'
+                            height='50'
+                            width='50'
+                          />
+                        </Media> 
+                          <Media body>
+    
+                            <h5 className='mt-2'>{item.name} </h5>
+                            {item.content}
+                          </Media>
+                            
+                        </Media>
+                            </div>
+                      </ListGroupItem>
+                  )
+                })}
+              </ReactSortable>
+            </Col> */}
         </Row>
       </CardBody>
     </Card>
